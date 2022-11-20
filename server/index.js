@@ -39,7 +39,9 @@ app.use(cors());
 
 app.use("/posts", postRoutes);
 
-// https://www.mongodb.com/cloud/atlas
+app.get("/", (req, res) => {
+    res.send("MERN learn project API.");
+});
 
 const PORT = process.env.PORT || 5000;
 
