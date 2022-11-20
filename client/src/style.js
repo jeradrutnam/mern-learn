@@ -22,25 +22,34 @@
  * SOFTWARE.
  **/
 
-import { makeStyles } from "@material-ui/core/styles";
+import { styled } from '@mui/material/styles';
 
-export default makeStyles((theme) => ({
-    appBar: {
+const PREFIX = 'custom';
+
+export const classes = {
+    appBar: `${PREFIX}-app-bar`,
+    heading: `${PREFIX}-heading`,
+    image: `${PREFIX}-image`,
+    mainContainer: `${PREFIX}-main-container`
+}
+
+export const StyleWrapper = styled('div')(({ theme }) => ({
+    [`& .${classes.appBar}`]: {
         borderRadius: 15,
         margin: '30px 0',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
-    heading: {
-        color: 'rgba(0,183,255, 1)',
+    [`& .${classes.heading}`]: {
+        color: '#9c27b0'
     },
-    image: {
-        marginLeft: '15px',
+    [`& .${classes.image}`]: {
+        marginLeft: '15px'
     },
-    [theme.breakpoints.down('sm')]: {
-        mainContainer: {
+    [`& .${classes.mainContainer}`]: {
+        [theme.breakpoints.down('sm')]: {
             flexDirection: 'column-reverse'
         }
     }

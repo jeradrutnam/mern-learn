@@ -22,27 +22,40 @@
  * SOFTWARE.
  **/
 
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
-export default makeStyles((theme) => ({
-    root: {
-        '& .MuiTextField-root': {
-            margin: theme.spacing(1),
-        },
+const PREFIX = 'custom';
+
+export const classes = {
+    root: `${PREFIX}-root`,
+    paper: `${PREFIX}-paper`,
+    form: `${PREFIX}-form`,
+    fileInput: `${PREFIX}-file-input`,
+    buttonSubmit: `${PREFIX}-button-submit`,
+    buttonClear: `${PREFIX}-button-clear`
+}
+
+export const StyleWrapper = styled('div')(({ theme }) => ({
+    [`& .${classes.root} .MuiTextField-root`]: {
+        margin: theme.spacing(1)
     },
-    paper: {
-        padding: theme.spacing(2),
+    [`& .${classes.paper}`]: {
+        padding: theme.spacing(2)
     },
-    form: {
+    [`& .${classes.form}`]: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
-    fileInput: {
+    [`& .${classes.fileInput}`]: {
         width: '97%',
-        margin: '10px 0',
+        margin: '10px 0'
     },
-    buttonSubmit: {
-        marginBottom: 10,
+    [`& .${classes.buttonSubmit}`]: {
+        margin: 8
+    },
+    [`& .${classes.buttonClear}`]: {
+        margin: 8,
+        marginTop: 0
     }
 }));

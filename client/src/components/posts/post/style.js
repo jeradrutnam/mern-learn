@@ -22,55 +22,75 @@
  * SOFTWARE.
  **/
 
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
-export default makeStyles({
-    media: {
+const PREFIX = 'custom';
+
+export const classes = {
+    media: `${PREFIX}-media`,
+    border: `${PREFIX}-border`,
+    fullHeightCard: `${PREFIX}-full-height-card`,
+    card: `${PREFIX}-card`,
+    overlay: `${PREFIX}-overlay`,
+    overlay2: `${PREFIX}-overlay2`,
+    grid: `${PREFIX}-grid`,
+    details: `${PREFIX}-details`,
+    title: `${PREFIX}-title`,
+    cardActions: `${PREFIX}-card-actions`
+}
+
+export const StyleWrapper = styled('div')(({ theme }) => ({
+    [`&`]: {
+        [theme.breakpoints.down('sm')]: {
+            width: '100%'
+        }
+    },
+    [`& .${classes.media}`]: {
         height: 0,
         paddingTop: '56.25%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        backgroundBlendMode: 'darken',
+        backgroundBlendMode: 'darken'
     },
-    border: {
-        border: 'solid',
+    [`& .${classes.border}`]: {
+        border: 'solid'
     },
-    fullHeightCard: {
-        height: '100%',
+    [`& .${classes.fullHeightCard}`]: {
+        height: '100%'
     },
-    card: {
+    [`& .${classes.card}`]: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderRadius: '15px',
         height: '100%',
-        position: 'relative',
+        position: 'relative'
     },
-    overlay: {
+    [`& .${classes.overlay}`]: {
         position: 'absolute',
         top: '20px',
         left: '20px',
-        color: 'white',
+        color: 'white'
     },
-    overlay2: {
+    [`& .${classes.overlay2}`]: {
         position: 'absolute',
         top: '20px',
         right: '20px',
-        color: 'white',
+        color: 'white'
     },
-    grid: {
-        display: 'flex',
+    [`& .${classes.grid}`]: {
+        display: 'flex'
     },
-    details: {
+    [`& .${classes.details}`]: {
         display: 'flex',
         justifyContent: 'space-between',
-        margin: '20px',
+        margin: '20px'
     },
-    title: {
-        padding: '0 16px',
+    [`& .${classes.title}`]: {
+        padding: '0 16px'
     },
-    cardActions: {
+    [`& .${classes.cardActions}`]: {
         padding: '0 16px 8px 16px',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     }
-});
+}));

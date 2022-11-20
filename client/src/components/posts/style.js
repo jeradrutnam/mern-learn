@@ -22,17 +22,31 @@
  * SOFTWARE.
  **/
 
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
-export default makeStyles((theme) => ({
-    mainContainer: {
+const PREFIX = 'custom';
+
+export const classes = {
+    mainContainer: `${PREFIX}-main-container`,
+    mainContainerItem: `${PREFIX}-main-container-item`,
+    smMargin: `${PREFIX}-sm-margin`,
+    actionDiv: `${PREFIX}-action-div`
+}
+
+export const StyleWrapper = styled('div')(({ theme }) => ({
+    [`& .${classes.mainContainer}`]: {
         display: 'flex',
         alignItems: 'center',
+        [`& .${classes.mainContainerItem}`]: {
+            [theme.breakpoints.down('sm')]: {
+                width: '100%'
+            }
+        }
     },
-    smMargin: {
-        margin: theme.spacing(1),
+    [`& .${classes.smMargin}`]: {
+        margin: theme.spacing(1)
     },
-    actionDiv: {
-        textAlign: 'center',
+    [`& .${classes.actionDiv}`]: {
+        textAlign: 'center'
     }
 }));
