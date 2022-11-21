@@ -42,8 +42,10 @@ app.use(cors());
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
-    res.send("MERN learn project API.");
+    res.send(`MERN learn project API. ${process.env.CONNECTION_URL}`);
 });
+
+
 
 // mongoose.connect(process.env.CONNECTION_URL)
 //     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
