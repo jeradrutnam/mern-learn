@@ -42,13 +42,9 @@ app.use(cors());
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
-    res.send(`MERN learn project API. ${process.env.CONNECTION_URL}`);
+    res.send(`MERN learn project API.`);
 });
 
-
-
-// mongoose.connect(process.env.CONNECTION_URL)
-//     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-//     .catch((error) => { console.error(error.message) });
-
-app.listen(PORT, () => console.log(`Listening to port ${PORT}`))
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+    .catch((error) => { console.error(error.message) });
