@@ -42,7 +42,7 @@ app.use(cors());
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
-    res.send(`MERN learn project API.`);
+    res.send(`Simple MERN project API.`);
 });
 
 mongoose.connect(process.env.MONGODB_URI)
