@@ -45,6 +45,10 @@ app.get("/", (req, res) => {
     res.send(`Simple MERN project API.`);
 });
 
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-    .catch((error) => { console.error(error.message) });
+if (process.env.MONGODB_URI) {
+    mongoose.connect(process.env.MONGODB_URI)
+        .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+        .catch((error) => { console.error(error.message) });
+} else {
+    console.log("Couldn't find MONGODB_URI in your environment.");
+}
