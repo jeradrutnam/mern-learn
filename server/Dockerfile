@@ -4,3 +4,4 @@ COPY . .
 RUN npm install --production
 CMD ["node", "index.js"]
 EXPOSE 5000
+USER mernlearnuser
