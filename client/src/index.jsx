@@ -24,10 +24,13 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./app";
+import { AuthProvider } from "@asgardeo/auth-react";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import deploymentConfig from "./deployment.config.json";
+
+import App from "./app";
 import "./index.css";
 
 import reducers from "./reducers";
@@ -35,9 +38,21 @@ import reducers from "./reducers";
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const postsUrl = deploymentConfig.API_ENDPOINT || "http://localhost:5000/posts";
 
 root.render(
-    <Provider store={ store }>
-        <App />
-    </Provider>
+    <AuthProvider
+        config={ {
+            signInRedirectURL: "http://localhost:3000",
+            signOutRedirectURL: "http://localhost:3000",
+            clientID: "nbxhOtGkYMT6VjArIEUlyLkgcy4a",
+            baseUrl: "https://api.asgardeo.io/t/jerad",
+            resourceServerURLs: [ postsUrl ],
+            scope: [ "openid","profile" ]
+        } }
+    >
+        <Provider store={ store }>
+            <App />
+        </Provider>
+    </AuthProvider>
 );

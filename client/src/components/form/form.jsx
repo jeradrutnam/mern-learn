@@ -69,7 +69,8 @@ const Form = ({ currentId, setCurrentId }) => {
     return (
         <StyleWrapper>
             <Paper className={ classes.paper }>
-                <form autoComplete="off" noValidate className={ `${classes.root} ${classes.form}` } onSubmit={handleSubmit}>
+                <form autoComplete="off" noValidate className={ `${classes.root} ${classes.form}` }
+                    onSubmit={ handleSubmit }>
                     <Typography variant="h6">{ currentId ? "Updating" : "Creating" } a Memory</Typography>
                     <TextField
                         name="creator"

@@ -35,12 +35,7 @@ export const classes = {
 
 export const StyleWrapper = styled('div')(({ theme }) => ({
     [`& .${classes.appBar}`]: {
-        borderRadius: 15,
-        margin: '30px 0',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin: '0 0 30px 0'
     },
     [`& .${classes.heading}`]: {
         color: '#9c27b0'

@@ -36,7 +36,8 @@ export const classes = {
     grid: `${PREFIX}-grid`,
     details: `${PREFIX}-details`,
     title: `${PREFIX}-title`,
-    cardActions: `${PREFIX}-card-actions`
+    cardActions: `${PREFIX}-card-actions`,
+    cardAdminActions: `${PREFIX}-card-admin-actions`
 }
 
 export const StyleWrapper = styled('div')(({ theme }) => ({
@@ -92,5 +93,8 @@ export const StyleWrapper = styled('div')(({ theme }) => ({
         padding: '0 16px 8px 16px',
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    [`& .${classes.cardAdminActions}`]: {
+        color: 'white'
     }
 }));

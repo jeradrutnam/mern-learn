@@ -22,19 +22,43 @@
  * SOFTWARE.
  **/
 
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from "@mui/material";
+import {
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Button,
+    Typography,
+    IconButton,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
+} from "@mui/material";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from "react-redux";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 import { deletePost, likePost } from "../../../actions/posts";
 import { classes, StyleWrapper } from "./style";
 
 const Post = ({ post, setCurrentId }) => {
+    const { state } = useAuthContext();
+    const [ open, setOpen ] = useState(false);
     const dispatch = useDispatch();
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <StyleWrapper>
@@ -44,11 +68,48 @@ const Post = ({ post, setCurrentId }) => {
                     <Typography variant="h6">{ post.creator }</Typography>
                     <Typography variant="body2">{ moment(post.createdAt).fromNow() }</Typography>
                 </div>
-                <div className={ classes.overlay2 }>
-                    <Button style={ {color: "white"} } size="small" onClick={ () => setCurrentId(post._id) }>
-                        <MoreHorizIcon fontSize="medium" />
-                    </Button>
-                </div>
+                <Dialog
+                    open={ open }
+                    onClose={ handleClose }
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        { "Delete post ?" }
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            You are going to delete this post. Are you sure to proceed with the action ?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={ handleClose } color="error">Cancel</Button>
+                        <Button
+                            onClick={ () => dispatch(deletePost(post._id)) }
+                            color="error"
+                            variant="contained"
+                            autoFocus>
+                                Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                { state.isAuthenticated &&
+                    <div className={ classes.overlay2 }>
+                        <IconButton
+                            className={ classes.cardAdminActions }
+                            size="small"
+                            onClick={ () => setCurrentId(post._id)
+                        }>
+                            <EditIcon fontSize="medium" />
+                        </IconButton>
+                        <IconButton
+                            className={ classes.cardAdminActions }
+                            size="small"
+                            onClick={ handleClickOpen }>
+                            <DeleteIcon fontSize="small" />
+                        </IconButton>
+                    </div>
+                }
                 <div className={ classes.details }>
                     <Typography variant="body2" color="textSecondary">{ post.tags.map((tag) => `#${tag} `) }</Typography>
                 </div>
@@ -60,9 +121,6 @@ const Post = ({ post, setCurrentId }) => {
                     <Button size="small" color="primary" onClick={ () => dispatch(likePost(post._id)) }>
                         <ThumbUpAltIcon fontSize="small" />
                         &nbsp;Like { post.likeCount }
-                    </Button>
-                    <Button size="small" color="primary" onClick={ () => dispatch(deletePost(post._id)) }>
-                        <DeleteIcon fontSize="small" />
                     </Button>
                 </CardActions>
             </Card>

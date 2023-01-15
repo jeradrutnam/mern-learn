@@ -29,16 +29,16 @@ import { Grid, CircularProgress } from "@mui/material";
 import Post from "./post/post";
 import { classes, StyleWrapper } from "./style";
 
-const Posts = ({ setCurrentId }) => {
+const Posts = ({ setCurrentId, sm }) => {
     const posts = useSelector((state) => state.posts);
 
     return (
         !posts.length ? <CircularProgress /> : (
             <StyleWrapper>
-                <Grid className={ classes.mainContainer } container alignItems="stretch" spacing={3}>
+                <Grid className={ classes.mainContainer } container alignItems="stretch" spacing={ 3 }>
                     { posts.map((post) => (
-                        <Grid item key={ post._id } xs={12} sm={6} className={ classes.mainContainerItem }>
-                            <Post post={post} setCurrentId={ setCurrentId } />
+                        <Grid item key={ post._id } xs={ 12 } sm={ sm } className={ classes.mainContainerItem }>
+                            <Post post={ post } setCurrentId={ setCurrentId } />
                         </Grid>
                     )) }
                 </Grid>

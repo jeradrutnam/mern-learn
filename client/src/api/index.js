@@ -22,13 +22,66 @@
  * SOFTWARE.
  **/
 
-import axios from "axios";
+import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 import deploymentConfig from "../deployment.config.json";
 
 const url = deploymentConfig.API_ENDPOINT || "http://localhost:5000/posts";
 
-export const fetchPosts = () => axios.get(url);
-export const createPost = (newPost) => axios.post(url, newPost);
-export const updatePost = (id, updatedPost) => axios.patch(`${url}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${url}/${id}`);
-export const likePost = (id) => axios.patch(`${url}/${id}/like`);
+const spaClient = AsgardeoSPAClient.getInstance();
+
+const doHTTPRequest = (requestConfig) => {
+    return spaClient.httpRequest(requestConfig)
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return error;
+        });
+};
+
+export const fetchPosts = () => {
+    const requestConfig = {
+        method: "GET",
+        url: url
+    };
+
+    return doHTTPRequest(requestConfig);
+};
+
+export const createPost = (newPost) => {
+    const requestConfig = {
+        method: "POST",
+        url: url,
+        data: newPost
+    };
+
+    return doHTTPRequest(requestConfig);
+};
+
+export const updatePost = (id, updatedPost) => {
+    const requestConfig = {
+        method: "PATCH",
+        url: `${url}/${id}`,
+        data: updatedPost
+    };
+
+    return doHTTPRequest(requestConfig);
+};
+
+export const deletePost = (id) => {
+    const requestConfig = {
+        method: "DELETE",
+        url: `${url}/${id}`
+    };
+
+    return doHTTPRequest(requestConfig);
+};
+
+export const likePost = (id) => {
+    const requestConfig = {
+        method: "PATCH",
+        url: `${url}/${id}/like`
+    };
+
+    return doHTTPRequest(requestConfig);
+};
