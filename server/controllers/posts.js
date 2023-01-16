@@ -22,11 +22,66 @@
  * SOFTWARE.
  **/
 
+import fetch from "node-fetch";
 import mongoose from "mongoose";
 
 import PostMessage from "../models/postMessage.js";
 
-export const getPosts = async(req, res) => {
+const introspect = async(asgardeoAccessToken) => {
+        const requestOptions = {
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    accept: "application/json",
+                    Authorization: `Basic ${Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`)
+                        .toString("base64")}`
+        },
+        method: "POST",
+    };
+
+    const tokenExchangeResponse = await fetch(
+        `${process.env.ASGARDEO_BASE_URL}/oauth2/introspect?token=${asgardeoAccessToken}`, requestOptions);
+
+    if (!tokenExchangeResponse.ok) {
+        throw new Error("Failed introspecting token");
+    }
+
+    const responseBody = await tokenExchangeResponse.json();
+
+    if (!(responseBody)?.active) {
+        // Client should try refreshing the token
+        return false;
+    }
+
+    return true;
+};
+
+const extractAccessToken = (req) => {
+    if ((!req?.headers?.authorization) || !req.headers.authorization.split(" ")[1]) {
+        return null;
+    }
+
+    const bearerToken = req.headers.authorization.split(" ");
+    const asgardeoAccessToken = bearerToken.length > 1 ? bearerToken[1] : bearerToken[0];
+
+    if (asgardeoAccessToken) {
+        return asgardeoAccessToken;
+    } else {
+        return null;
+    }
+};
+
+const isValidAccessToken = async (req, res) => {
+    const validAccessToken = await introspect(extractAccessToken(req));
+
+    if (validAccessToken) {
+        return;
+    } else {
+        res.status(401).send("Invalid Access Token");
+    }
+};
+
+export const getPosts = async (req, res) => {
     try {
         const postMessages = await PostMessage.find();
 
@@ -36,7 +91,10 @@ export const getPosts = async(req, res) => {
     }
 };
 
-export const createPost = async(req, res) => {
+export const createPost = async (req, res) => {
+
+    await isValidAccessToken(req, res);
+
     const post = req.body;
     const newPost = new PostMessage(post);
 
@@ -49,7 +107,10 @@ export const createPost = async(req, res) => {
     }
 };
 
-export const updatePost = async(req, res) => {
+export const updatePost = async (req, res) => {
+
+    await isValidAccessToken(req, res);
+
     const { id: _id } = req.params;
     const post = req.body;
 
@@ -61,6 +122,9 @@ export const updatePost = async(req, res) => {
 };
 
 export const deletePost = async(req, res) => {
+
+    await isValidAccessToken(req, res);
+
     const { id: _id } = req.params;
     const post = req.body;
 
@@ -72,6 +136,9 @@ export const deletePost = async(req, res) => {
 };
 
 export const likePost = async(req, res) => {
+
+    await isValidAccessToken(req, res);
+
     const { id: _id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post with that id.");

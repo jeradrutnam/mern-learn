@@ -22,6 +22,7 @@
  * SOFTWARE.
  **/
 
+import axios from "axios";
 import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 import deploymentConfig from "../deployment.config.json";
 
@@ -39,14 +40,7 @@ const doHTTPRequest = (requestConfig) => {
         });
 };
 
-export const fetchPosts = () => {
-    const requestConfig = {
-        method: "GET",
-        url: url
-    };
-
-    return doHTTPRequest(requestConfig);
-};
+export const fetchPosts = () => axios.get(url);
 
 export const createPost = (newPost) => {
     const requestConfig = {
