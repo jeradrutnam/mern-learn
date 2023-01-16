@@ -42,7 +42,7 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_BASE_URL}` }));
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
-    res.send(`Simple MERN project API.`);
+    res.send(`My Travel Memories API v${process.env.npm_package_version}. `);
 });
 
 if (process.env.MONGODB_URI) {
