@@ -28,6 +28,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import packageJson from './package.json' assert { type: "json" };
 import postRoutes from "./routes/posts.js";
 
 const PORT = process.env.PORT || 5000;
@@ -42,7 +43,7 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_BASE_URL}` }));
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
-    res.send(`My Travel Memories API v${process.env.npm_package_version}. `);
+    res.send(`My Travel Memories API v${packageJson.version}. `);
 });
 
 if (process.env.MONGODB_URI) {
