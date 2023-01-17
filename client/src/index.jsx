@@ -28,7 +28,6 @@ import { AuthProvider } from "@asgardeo/auth-react";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import deploymentConfig from "./deployment.config.json";
 
 import App from "./app";
 import "./index.css";
@@ -38,16 +37,17 @@ import reducers from "./reducers";
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const postsUrl = deploymentConfig.API_ENDPOINT || "http://localhost:5000/posts";
+
+console.log(process.env)
 
 root.render(
     <AuthProvider
         config={ {
-            signInRedirectURL: deploymentConfig.CLIENT_BASE_URL,
-            signOutRedirectURL: deploymentConfig.CLIENT_BASE_URL,
-            clientID: deploymentConfig.CLIENT_ID,
-            baseUrl: deploymentConfig.ASGARDEO_BASE_URL,
-            resourceServerURLs: [ postsUrl ],
+            signInRedirectURL: `${process.env.REACT_APP_CLIENT_BASE_URL}`,
+            signOutRedirectURL: `${process.env.REACT_APP_CLIENT_BASE_URL}`,
+            clientID: `${process.env.REACT_APP_CLIENT_ID}`,
+            baseUrl: `${process.env.REACT_APP_ASGARDEO_BASE_URL}`,
+            resourceServerURLs: [ `${process.env.REACT_APP_API_ENDPOINT}` ],
             scope: [ "openid","profile" ]
         } }
     >

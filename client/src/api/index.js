@@ -24,9 +24,8 @@
 
 import axios from "axios";
 import { AsgardeoSPAClient } from "@asgardeo/auth-react";
-import deploymentConfig from "../deployment.config.json";
 
-const url = deploymentConfig.API_ENDPOINT || "http://localhost:5000/posts";
+const url = `${process.env.REACT_APP_API_ENDPOINT}`;
 
 const spaClient = AsgardeoSPAClient.getInstance();
 
