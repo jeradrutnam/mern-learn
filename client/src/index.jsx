@@ -43,8 +43,8 @@ const postsUrl = deploymentConfig.API_ENDPOINT || "http://localhost:5000/posts";
 root.render(
     <AuthProvider
         config={ {
-            signInRedirectURL: "http://localhost:3000",
-            signOutRedirectURL: "http://localhost:3000",
+            signInRedirectURL: deploymentConfig.ASGARDEO_BASE_URL,
+            signOutRedirectURL: deploymentConfig.ASGARDEO_BASE_URL,
             clientID: deploymentConfig.CLIENT_ID,
             baseUrl: deploymentConfig.ASGARDEO_BASE_URL,
             resourceServerURLs: [ postsUrl ],
