@@ -46,6 +46,7 @@ import { useAuthContext } from "@asgardeo/auth-react";
 
 import { deletePost, likePost } from "../../../actions/posts";
 import { classes, StyleWrapper } from "./style";
+import NO_IMAGE from "../../../images/no-image.jpg";
 
 const Post = ({ post, setCurrentId }) => {
     const { state } = useAuthContext();
@@ -60,10 +61,12 @@ const Post = ({ post, setCurrentId }) => {
         setOpen(false);
     };
 
+    const postImage = post.selectedFile || NO_IMAGE;
+
     return (
         <StyleWrapper>
             <Card className={ classes.card }>
-                <CardMedia className={ classes.media } image={ post.selectedFile } title={ post.title } />
+                <CardMedia className={ classes.media } image={ postImage } title={ post.title } />
                 <div className={ classes.overlay }>
                     <Typography variant="h6">{ post.creator }</Typography>
                     <Typography variant="body2">{ moment(post.createdAt).fromNow() }</Typography>
