@@ -35,17 +35,19 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 dotenv.config();
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({
+const corsConfig = {
     credentials: true,
     origin: `${process.env.CLIENT_BASE_URL}`,
     methods: ["GET, OPTIONS, PATCH, DELETE, POST, PUT"],
     allowedHeaders: ["X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5," +
         "Content-Type, Date, X-Api-Version"
     ]
-}));
+};
 
+// app.options('*', cors(corsConfig));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(cors({ credentials: true, origin: `${process.env.CLIENT_BASE_URL}` }));
 app.use("/posts", postRoutes);
 
 app.get("/", (req, res) => {
