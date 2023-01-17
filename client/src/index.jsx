@@ -45,8 +45,8 @@ root.render(
         config={ {
             signInRedirectURL: "http://localhost:3000",
             signOutRedirectURL: "http://localhost:3000",
-            clientID: "nbxhOtGkYMT6VjArIEUlyLkgcy4a",
-            baseUrl: "https://api.asgardeo.io/t/jerad",
+            clientID: deploymentConfig.CLIENT_ID,
+            baseUrl: deploymentConfig.ASGARDEO_BASE_URL,
             resourceServerURLs: [ postsUrl ],
             scope: [ "openid","profile" ]
         } }

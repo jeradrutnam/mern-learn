@@ -1,3 +1,5 @@
 {
-    "API_ENDPOINT": "https://mern-learn-server.vercel.app/posts"
+    "API_ENDPOINTs": "https://mern-learn-server.vercel.app/posts",
+    "CLIENT_ID": "nbxhOtGkYMT6VjArIEUlyLkgcy4a",
+    "ASGARDEO_BASE_URL": "https://api.asgardeo.io/t/jerad"
 }
